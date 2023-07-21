@@ -16,4 +16,34 @@ RSpec.describe Ship do
       expect(@cruiser.health).to eq(3)
     end
   end
+
+  describe "#sunk?" do
+    it "can be sunk" do
+      expect(@cruiser.sunk?).to eq(false)
+    end
+
+    it "health can be sunk after it's hit 3 times" do
+      expect(@cruiser.health).to eq(3)
+      @cruiser.hit
+      expect(@cruiser.health).to eq(2)
+      @cruiser.hit
+      expect(@cruiser.health).to eq(1)
+      expect(@cruiser.sunk?).to eq(false)
+      @cruiser.hit
+      expect(@cruiser.health).to eq(0)
+      expect(@cruiser.sunk?).to eq(true)
+    end
+
+    describe "#hit" do
+      it "can decrease ship health by one" do
+        expect(@cruiser.health).to eq(3)
+        @cruiser.hit
+        expect(@cruiser.health).to eq(2)
+      end
+    end
+
+  end
+
+
+
 end
