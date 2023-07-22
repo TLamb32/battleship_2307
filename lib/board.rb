@@ -90,4 +90,14 @@ class Board
       letter_2.ord - letter_1.ord == 1 || letter_2.ord - letter_1.ord == 0
     end
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      if @cells.key?(coordinate)
+        @cells[coordinate].place_ship(ship)
+      end
+    end
+  end
+  
+
 end
