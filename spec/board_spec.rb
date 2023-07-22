@@ -55,6 +55,14 @@ RSpec.describe Board do
     end
   end
 
+  describe "#diagonal_check" do
+    it "checks if cells ar placed diagonally" do
+      expect(@board.diagonal_check(@cruiser, ["A1", "B2", "C3"])).to eq(false)
+      expect(@board.diagonal_check(@submarine, ["C2", "D3"])).to eq(false)
+    end
+
+  end
+
   describe "#coordinate_splitter_number" do
     it "can return an array of number coordinates" do
       expect(@board.coordinate_splitter_number(@cruiser, ["A1", "A2", "A4"])).to eq(["1", "2", "4"])
