@@ -47,4 +47,10 @@ class Board
     end 
     letter_collector
   end
+
+  def consecutive_checker_numbers(ship, coordinates)
+    coordinate_splitter_number(ship, coordinates).each_cons(2).all? do |number_1, number_2|
+      number_2.to_i - number_1.to_i == 1 || number_2.to_i - number_1.to_i == 0
+    end
+  end
 end
