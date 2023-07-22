@@ -25,8 +25,26 @@ class Board
     @cells.has_key?(coordinate)
   end
 
-  def valid_placement?(ship, coordinates)
-    ship.length == coordinates.count
+  # def valid_placement?(ship, coordinates)
+  #   ship.length == coordinates.count && consecutive_check(ship, coordinates) == true
     # require 'pry'; binding.pry
+  # end
+
+  def coordinate_splitter_number(ship, coordinates) #helper method
+    number_collector = []
+
+    coordinates.each do |coordinate|
+      number_collector << coordinate.delete("^0-9")
+    end
+      number_collector
+  end
+
+  def coordinate_splitter_letter(ship, coordinates) #helper method
+    letter_collector = []
+
+    coordinates.each do |coordinate|
+      letter_collector << coordinate.delete("^A-Z")
+    end 
+    letter_collector
   end
 end
