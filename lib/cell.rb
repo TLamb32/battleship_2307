@@ -21,7 +21,24 @@ class Cell
   end
 
   def fire_upon
-    @ship.hit 
-    @fired_at = true
+    if empty? == false
+      @ship.hit
+      @fired_at = true
+    else
+      @fired_at = true
+    end
   end
+
+  def render(option = false)
+    if option == true && @ship != nil && @fired_at == false
+      "S"
+    elsif @ship == nil && @fired_at == true
+      "M"
+    elsif @ship != nil && @fired_at == true
+      "H"
+    else @ship == nil && @fired_at == false
+      "."
+    end
+  end
+
 end
