@@ -71,4 +71,11 @@ RSpec.describe Board do
       expect(@board.coordinate_splitter_letter(@submarine, ["C1", "B1"])).to eq(["C", "B"])
     end
   end
+
+  describe "#consecutive_checker_numbers" do
+    it "can check if the array of numbers are consecutive" do
+      expect(@board.consecutive_checker_numbers(@cruiser, ["A1", "A2", "A4"])).to eq(false)
+      expect(@board.consecutive_checker_numbers(@submarine, ["A1", "C1"])).to eq(true)
+    end
+  end
 end
