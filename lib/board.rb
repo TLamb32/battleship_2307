@@ -48,9 +48,16 @@ class Board
     letter_collector
   end
 
-  def consecutive_checker_numbers(ship, coordinates)
+  def consecutive_checker_numbers(ship, coordinates) #helper method
     coordinate_splitter_number(ship, coordinates).each_cons(2).all? do |number_1, number_2|
       number_2.to_i - number_1.to_i == 1 || number_2.to_i - number_1.to_i == 0
+    end
+  end
+
+  def consecutive_checker_letters(ship, coordinates) #helper method
+    coordinate_splitter_letter(ship, coordinates).each_cons(2).all? do |letter_1, letter_2|
+      letter_2.ord - letter_1.ord == 1 || letter_2.ord - letter_1.ord == 0
+      require 'pry'; binding.pry
     end
   end
 end
