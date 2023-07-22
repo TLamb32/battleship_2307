@@ -40,6 +40,21 @@ class Board
     end
   end
 
+  def diagonal_check(ship, coordinates)
+    number_d = nil
+    letter_d = nil
+    coordinate_splitter_number(ship, coordinates).each_cons(2).all? do |number_1, number_2|
+      number_d = number_2.to_i - number_1.to_i == 1 
+    end
+    coordinate_splitter_letter(ship, coordinates).each_cons(2).all? do |letter_1, letter_2|
+      letter_d = letter_2.ord - letter_1.ord == 1 
+    end
+    if number_d && letter_d == true
+      false
+    end
+  end
+
+
   def coordinate_splitter_number(ship, coordinates) #helper method
     number_collector = []
 
