@@ -22,8 +22,16 @@ RSpec.describe Board do
       expect(@board.cells).to be_a Hash
       expect(@board.cells.values.first).to be_a Cell
       expect(@board.cells.length).to eq(16)
-      require 'pry';binding.pry
+    end
+  end
 
+  describe "#valid_coordinate?" do
+    it "checks if the coordinate is on the board" do
+      expect(@board.valid_coordinate?("A1")).to eq(true)
+      expect(@board.valid_coordinate?("D4")).to eq(true)
+      expect(@board.valid_coordinate?("A5")).to eq(false)
+      expect(@board.valid_coordinate?("E1")).to eq(false)
+      expect(@board.valid_coordinate?("A22")).to eq(false)
     end
   end
 end
