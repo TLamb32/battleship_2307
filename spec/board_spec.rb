@@ -37,12 +37,18 @@ RSpec.describe Board do
   end
 
   describe "#valid_placement?" do
-    xit "can check the number of coordinates in the array should be the same as the length of the ship" do
+    it "can check the number of coordinates in the array should be the same as the length of the ship" do
       expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to eq(false)
 
       expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
       expect(@board.valid_placement?(@submarine, ["A2", "A3"])).to eq(true)
+
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
+      expect(@board.valid_placement?(@cruiser, ["A1", "B2", "C3"])).to eq(false)
+      
+      expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
+      expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
     end
   end
 
@@ -59,6 +65,9 @@ RSpec.describe Board do
     it "checks if cells ar placed diagonally" do
       expect(@board.diagonal_check(@cruiser, ["A1", "B2", "C3"])).to eq(false)
       expect(@board.diagonal_check(@submarine, ["C2", "D3"])).to eq(false)
+      expect(@board.diagonal_check(@cruiser, ["A1", "A2", "A3"])).to eq(true)
+
+    
     end
 
   end
