@@ -25,10 +25,15 @@ class Board
     @cells.has_key?(coordinate)
   end
 
-  # def valid_placement?(ship, coordinates)
-  #   ship.length == coordinates.count && consecutive_check(ship, coordinates) == true
-    # require 'pry'; binding.pry
-  # end
+  def valid_placement?(ship, coordinates)
+    if (ship.length == coordinates.count) &&
+    consecutive_check(ship, coordinates) &&
+    diagonal_check(ship, coordinates) == true
+      true
+    else
+      false
+    end
+  end
 
   def consecutive_check(ship, coordinates)
     if (consecutive_checker_letters(ship, coordinates) == true && consecutive_checker_numbers(ship, coordinates) == false)
@@ -51,9 +56,10 @@ class Board
     end
     if number_d && letter_d == true
       false
+    else
+      true
     end
   end
-
 
   def coordinate_splitter_number(ship, coordinates) #helper method
     number_collector = []
