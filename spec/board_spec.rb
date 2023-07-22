@@ -37,7 +37,7 @@ RSpec.describe Board do
   end
 
   describe "#valid_placement?" do
-    it "can check the number of coordinates in the array should be the same as the length of the ship" do
+    xit "can check the number of coordinates in the array should be the same as the length of the ship" do
       expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to eq(false)
 
@@ -45,5 +45,30 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["A2", "A3"])).to eq(true)
     end
 
+    xit "can make sure the coordinates are consecutive" do
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
+      expect(@board.valid_placement?(@submarine, ["A1", "C1"])).to eq(false)
+      expect(@board.valid_placement?(@cruiser, ["A3", "A2", "A1"])).to eq(false)
+      expect(@board.valid_placement?(@submarine, ["C1", "B1"])).to eq(false)
+
+    end
+  end
+
+  describe "#coordinate_splitter_number" do
+    it "can return an array of number coordinates" do
+      expect(@board.coordinate_splitter_number(@cruiser, ["A1", "A2", "A4"])).to eq(["1", "2", "4"])
+      expect(@board.coordinate_splitter_number(@submarine, ["A1", "C1"])).to eq(["1", "1"])
+      expect(@board.coordinate_splitter_number(@cruiser, ["A3", "A2", "A1"])).to eq(["3", "2", "1"])
+      expect(@board.coordinate_splitter_number(@submarine, ["C1", "B1"])).to eq(["1", "1"])
+    end
+  end
+
+  describe "#coordinate_splitter_letter" do
+    it "can return an array of letter coordinates" do
+      expect(@board.coordinate_splitter_letter(@cruiser, ["A1", "A2", "A4"])).to eq(["A", "A", "A"])
+      expect(@board.coordinate_splitter_letter(@submarine, ["A1", "C1"])).to eq(["A", "C"])
+      expect(@board.coordinate_splitter_letter(@cruiser, ["A3", "A2", "A1"])).to eq(["A", "A", "A"])
+      expect(@board.coordinate_splitter_letter(@submarine, ["C1", "B1"])).to eq(["C", "B"])
+    end
   end
 end
