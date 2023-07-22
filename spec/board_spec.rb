@@ -78,4 +78,11 @@ RSpec.describe Board do
       expect(@board.consecutive_checker_numbers(@submarine, ["A1", "C1"])).to eq(true)
     end
   end
+
+  describe "#consecutive_checker_letters" do
+    it "can check if the array of letters are consecutive" do
+      # expect(@board.consecutive_checker_letters(@cruiser, ["A1", "A2", "A4"])).to eq(true)
+      expect(@board.consecutive_checker_letters(@submarine, ["A1", "C1"])).to eq(false)
+    end
+  end
 end
