@@ -30,6 +30,16 @@ class Board
     # require 'pry'; binding.pry
   # end
 
+  def consecutive_check(ship, coordinates)
+    if (consecutive_checker_letters(ship, coordinates) == true && consecutive_checker_numbers(ship, coordinates) == false)
+      false
+    elsif (consecutive_checker_letters(ship, coordinates) == false && consecutive_checker_numbers(ship, coordinates) == true)
+      false
+    else 
+      true
+    end
+  end
+
   def coordinate_splitter_number(ship, coordinates) #helper method
     number_collector = []
 
@@ -57,7 +67,6 @@ class Board
   def consecutive_checker_letters(ship, coordinates) #helper method
     coordinate_splitter_letter(ship, coordinates).each_cons(2).all? do |letter_1, letter_2|
       letter_2.ord - letter_1.ord == 1 || letter_2.ord - letter_1.ord == 0
-      require 'pry'; binding.pry
     end
   end
 end
