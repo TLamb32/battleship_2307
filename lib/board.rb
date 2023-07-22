@@ -24,4 +24,49 @@ class Board
   def valid_coordinate?(coordinate)
     @cells.has_key?(coordinate)
   end
+
+  # def valid_placement?(ship, coordinates)
+  #   ship.length == coordinates.count && consecutive_check(ship, coordinates) == true
+    # require 'pry'; binding.pry
+  # end
+
+  def consecutive_check(ship, coordinates)
+    if (consecutive_checker_letters(ship, coordinates) == true && consecutive_checker_numbers(ship, coordinates) == false)
+      false
+    elsif (consecutive_checker_letters(ship, coordinates) == false && consecutive_checker_numbers(ship, coordinates) == true)
+      false
+    else 
+      true
+    end
+  end
+
+  def coordinate_splitter_number(ship, coordinates) #helper method
+    number_collector = []
+
+    coordinates.each do |coordinate|
+      number_collector << coordinate.delete("^0-9")
+    end
+      number_collector
+  end
+
+  def coordinate_splitter_letter(ship, coordinates) #helper method
+    letter_collector = []
+
+    coordinates.each do |coordinate|
+      letter_collector << coordinate.delete("^A-Z")
+    end 
+    letter_collector
+  end
+
+  def consecutive_checker_numbers(ship, coordinates) #helper method
+    coordinate_splitter_number(ship, coordinates).each_cons(2).all? do |number_1, number_2|
+      number_2.to_i - number_1.to_i == 1 || number_2.to_i - number_1.to_i == 0
+    end
+  end
+
+  def consecutive_checker_letters(ship, coordinates) #helper method
+    coordinate_splitter_letter(ship, coordinates).each_cons(2).all? do |letter_1, letter_2|
+      letter_2.ord - letter_1.ord == 1 || letter_2.ord - letter_1.ord == 0
+    end
+  end
 end
