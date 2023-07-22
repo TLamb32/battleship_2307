@@ -34,6 +34,8 @@ class Cell
       "S"
     elsif @ship == nil && @fired_at == true
       "M"
+    elsif @ship != nil && @fired_at == true && @ship.sunk? == true
+      "X"
     elsif @ship != nil && @fired_at == true
       "H"
     else @ship == nil && @fired_at == false
