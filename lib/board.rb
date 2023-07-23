@@ -106,5 +106,19 @@ class Board
     end
   end
   
-
+  def render(option = false)
+    # if option == false  
+    #   a = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    # else option == true
+    #   b = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+    # end
+    
+    rows = @cells.each_slice(4) do |cell_1|
+      # row_1 = []
+      # cell_1.each do |cell|
+      #   row_1 << cell.render
+    end
+    rows
+    require 'pry'; binding.pry
+  end
 end
