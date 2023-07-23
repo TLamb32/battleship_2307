@@ -49,6 +49,13 @@ RSpec.describe Board do
       
       expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
       expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
+
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
+      @board.place(@cruiser, ["B1", "B2", "B3"])
+      expect(@board.valid_placement?(@submarine, ["B1", "B2"])).to eq(false)
+      expect(@board.valid_placement?(@submarine, ["C1", "C2"])).to eq(true)
+
     end
   end
 
@@ -115,6 +122,17 @@ RSpec.describe Board do
       expect(@cell_3.ship == @cell_1.ship).to eq(true)
       expect(@cell_4.ship == @cell_1.ship).to eq(false)
       expect(@cell_4.ship).to eq(nil)
+    end
+  end
+
+  describe "#overlapping_ships" do
+    it "checks for overlapping ships" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@board.overlapping_ships(@submarine, ["A1", "B1"])).to eq(false)
+      expect(@board.overlapping_ships(@submarine, ["B1", "B2"])).to eq(true)
+
+      @board.place(@cruiser, ["B1", "B2", "B3"])
+      expect(@board.overlapping_ships(@submarine, ["B1", "B2"])).to eq(false)
     end
   end
 
