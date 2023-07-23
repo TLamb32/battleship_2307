@@ -25,10 +25,16 @@ class Board
     @cells.has_key?(coordinate)
   end
 
-  # def valid_placement?(ship, coordinates)
-  #   ship.length == coordinates.count && consecutive_check(ship, coordinates) == true
-    # require 'pry'; binding.pry
-  # end
+  def valid_placement?(ship, coordinates)
+    if (ship.length == coordinates.count) &&
+    consecutive_check(ship, coordinates) &&
+    diagonal_check(ship, coordinates) && 
+    overlapping_ships(ship, coordinates)
+      true
+    else
+      false
+    end
+  end
 
   def consecutive_check(ship, coordinates)
     if (consecutive_checker_letters(ship, coordinates) == true && consecutive_checker_numbers(ship, coordinates) == false)
@@ -36,6 +42,22 @@ class Board
     elsif (consecutive_checker_letters(ship, coordinates) == false && consecutive_checker_numbers(ship, coordinates) == true)
       false
     else 
+      true
+    end
+  end
+
+  def diagonal_check(ship, coordinates)
+    number_d = nil
+    letter_d = nil
+    coordinate_splitter_number(ship, coordinates).each_cons(2).all? do |number_1, number_2|
+      number_d = number_2.to_i - number_1.to_i == 1 
+    end
+    coordinate_splitter_letter(ship, coordinates).each_cons(2).all? do |letter_1, letter_2|
+      letter_d = letter_2.ord - letter_1.ord == 1 
+    end
+    if number_d && letter_d == true
+      false
+    else
       true
     end
   end
@@ -69,4 +91,20 @@ class Board
       letter_2.ord - letter_1.ord == 1 || letter_2.ord - letter_1.ord == 0
     end
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      if @cells.key?(coordinate)
+        @cells[coordinate].place_ship(ship)
+      end
+    end
+  end
+
+  def overlapping_ships(ship, coordinates)
+    coordinates.all? do |coordinate|
+      @cells.key?(coordinate) && @cells[coordinate].empty?  
+    end
+  end
+  
+
 end

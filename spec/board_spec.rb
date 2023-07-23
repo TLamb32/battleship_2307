@@ -37,12 +37,25 @@ RSpec.describe Board do
   end
 
   describe "#valid_placement?" do
-    xit "can check the number of coordinates in the array should be the same as the length of the ship" do
+    it "can check the number of coordinates in the array should be the same as the length of the ship" do
       expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to eq(false)
 
       expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
       expect(@board.valid_placement?(@submarine, ["A2", "A3"])).to eq(true)
+
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
+      expect(@board.valid_placement?(@cruiser, ["A1", "B2", "C3"])).to eq(false)
+      
+      expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
+      expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
+
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
+      @board.place(@cruiser, ["B1", "B2", "B3"])
+      expect(@board.valid_placement?(@submarine, ["B1", "B2"])).to eq(false)
+      expect(@board.valid_placement?(@submarine, ["C1", "C2"])).to eq(true)
+
     end
   end
 
@@ -52,6 +65,14 @@ RSpec.describe Board do
     expect(@board.consecutive_check(@submarine, ["A1", "C1"])).to eq(false)
     expect(@board.consecutive_check(@cruiser, ["A1", "A2", "A3"])).to eq(true)
     expect(@board.consecutive_check(@submarine, ["B1", "C1"])).to eq(true)
+    end
+  end
+
+  describe "#diagonal_check" do
+    it "checks if cells ar placed diagonally" do
+      expect(@board.diagonal_check(@cruiser, ["A1", "B2", "C3"])).to eq(false)
+      expect(@board.diagonal_check(@submarine, ["C2", "D3"])).to eq(false)
+      expect(@board.diagonal_check(@cruiser, ["A1", "A2", "A3"])).to eq(true)
     end
   end
 
@@ -86,4 +107,34 @@ RSpec.describe Board do
       expect(@board.consecutive_checker_letters(@submarine, ["A1", "C1"])).to eq(false)
     end
   end
+
+  describe "#place" do
+    it "places a ship on a cell" do
+      @cell_1 = @board.cells["A1"]
+      @cell_2 = @board.cells["A2"]
+      @cell_3 = @board.cells["A3"] 
+      @cell_4 = @board.cells["A4"]
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@cell_1.ship).to eq(@cruiser)
+      expect(@cell_2.ship).to eq(@cruiser)
+      expect(@cell_3.ship).to eq(@cruiser)
+      expect(@cell_3.ship == @cell_2.ship).to eq(true)
+      expect(@cell_3.ship == @cell_1.ship).to eq(true)
+      expect(@cell_4.ship == @cell_1.ship).to eq(false)
+      expect(@cell_4.ship).to eq(nil)
+    end
+  end
+
+  describe "#overlapping_ships" do
+    it "checks for overlapping ships" do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@board.overlapping_ships(@submarine, ["A1", "B1"])).to eq(false)
+      expect(@board.overlapping_ships(@submarine, ["B1", "B2"])).to eq(true)
+
+      @board.place(@cruiser, ["B1", "B2", "B3"])
+      expect(@board.overlapping_ships(@submarine, ["B1", "B2"])).to eq(false)
+    end
+  end
+
+
 end
