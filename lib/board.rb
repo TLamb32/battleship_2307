@@ -28,7 +28,8 @@ class Board
   def valid_placement?(ship, coordinates)
     if (ship.length == coordinates.count) &&
     consecutive_check(ship, coordinates) &&
-    diagonal_check(ship, coordinates) == true
+    diagonal_check(ship, coordinates) && 
+    overlapping_ships(ship, coordinates)
       true
     else
       false
@@ -96,6 +97,12 @@ class Board
       if @cells.key?(coordinate)
         @cells[coordinate].place_ship(ship)
       end
+    end
+  end
+
+  def overlapping_ships(ship, coordinates)
+    coordinates.all? do |coordinate|
+      @cells.key?(coordinate) && @cells[coordinate].empty?  
     end
   end
   
