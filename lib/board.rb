@@ -38,12 +38,6 @@ class Board
 
   def consecutive_check(ship, coordinates)
    consecutive_checker_letters(ship, coordinates) && coordinate_splitter_number(ship, coordinates).uniq.length == 1 || consecutive_checker_numbers(ship, coordinates) && coordinate_splitter_letter(ship, coordinates).uniq.length == 1
-      # false
-    # elsif (consecutive_checker_letters(ship, coordinates) == false && consecutive_checker_numbers(ship, coordinates) == true)
-    #   false
-    # else 
-    #   true
-    # end
   end
 
   def diagonal_check(ship, coordinates)
@@ -116,13 +110,15 @@ class Board
     end
   end
 
-  def random_placer(ship)
+
+  def random_placer_helper(ship)
     coordinates_needed = @cells.keys
     random_coordinates = coordinates_needed.sample(ship.length)
     until valid_placement?(ship, random_coordinates)
       random_coordinates = coordinates_needed.sample(ship.length)
     end
-    # require 'pry'; binding.pry
     random_coordinates
+    place(ship, random_coordinates)
+    # require 'pry'; binding.pry
   end
 end

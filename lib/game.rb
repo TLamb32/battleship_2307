@@ -20,16 +20,46 @@ class Game
     @submarine = Ship.new("Submarine", 2)
     @computer_cruiser = Ship.new("Cruiser", 3)
     @computer_submarine = Ship.new("Submarine", 2)
+    @computer_board.random_placer_helper(@computer_cruiser)
+    @computer_board.random_placer_helper(@computer_submarine)
   end
 
   # @computer_board.place_ship.sample
-  def game_begin
+  def game_begin 
     puts "I have laid out my ships on the grid.
     You now need to lay out your two ships.
-    The Cruiser is three units long and the Submarine is two units long."
+    The Cruiser is #{@cruiser.length} spaces long and the Submarine is #{@submarine.length} spaces long."
     puts @board.render(true)
-    puts "Enter the squares for the Cruiser (3 spaces):"
-    user_input = gets.chomp
 
+    loop do
+      puts "Enter the squares for the Cruiser (3 spaces):"
+      user_input = gets.chomp
+      formatted = user_input.upcase.delete(",").split
+      if @board.valid_placement?(@cruiser, formatted) 
+        @board.place(@cruiser, formatted)
+        puts "Great placement!"
+        puts @board.render(true)
+        break
+      else
+        puts "Invalid coordinates, please try again."
+      end
+      puts @board.render(true)
+    end
+
+    loop do
+      puts "Now, place your submarine!"
+      # puts @board.render(true)
+      user_input = gets.chomp
+      formatted = user_input.upcase.delete(",").split
+        if @board.valid_placement?(@submarine, formatted) 
+          @board.place(@submarine, formatted)
+          puts "Great placement!"
+          puts @board.render(true)
+          break
+        else
+           puts "Invalid coordinates, please try again."
+          end
+          puts @board.render(true)
+    end
   end
 end

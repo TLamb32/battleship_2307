@@ -149,15 +149,13 @@ RSpec.describe Board do
     end
   end
 
-  describe "#random_placer" do
+  describe "#random_placer_helper" do
     it "can verify if random coordinates are valid" do
-      @board.random_placer(@cruiser)
+      @board.random_placer_helper(@cruiser)
 
       expect(@board.valid_placement?(@cruiser, ["C2", "A2", "B1"])).to eq(false)
-      expect(@board.random_placer(@cruiser).length).to eq(3)
-      expect(@board.random_placer(@cruiser)).to be_a Array
-    
-
+      expect(@board.random_placer_helper(@cruiser).length).to eq(3)
+      expect(@board.random_placer_helper(@cruiser)).to be_a Array
     end
   end
 end
