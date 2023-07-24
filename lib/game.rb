@@ -57,9 +57,34 @@ class Game
           puts @board.render(true)
           break
         else
-           puts "Invalid coordinates, please try again."
+          puts "Invalid coordinates, please try again."
           end
           puts @board.render(true)
     end
+
+    loop do
+      puts "=============COMPUTER BOARD============="
+      puts @computer_board.render(true)
+      puts "==============PLAYER BOARD=============="
+      puts @board.render(true)
+      puts "Enter the coordinate for your shot:"
+      user_input = gets.chomp
+      formatted = user_input.upcase
+        if @computer_board.valid_coordinate?(formatted) && @computer_board.cells[formatted].fire_upon == true
+          if @computer_board.cells[formatted].empty? == false
+            puts "You hit my ship!"
+            puts @computer_board.render(true)
+          else
+            puts "You missed"
+            puts @computer_board.render(true)
+          end
+          break
+        puts @computer_board.render(true)
+      else
+        puts "Please enter a valid coordinate:"
+      end
+    end
+
+
   end
 end
