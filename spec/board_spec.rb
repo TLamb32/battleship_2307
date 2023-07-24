@@ -65,6 +65,7 @@ RSpec.describe Board do
     expect(@board.consecutive_check(@submarine, ["A1", "C1"])).to eq(false)
     expect(@board.consecutive_check(@cruiser, ["A1", "A2", "A3"])).to eq(true)
     expect(@board.consecutive_check(@submarine, ["B1", "C1"])).to eq(true)
+    expect(@board.consecutive_check(@cruiser, ["C2", "A2", "B1"])).to eq(false)
     end
   end
 
@@ -98,13 +99,15 @@ RSpec.describe Board do
     it "can check if the array of numbers are consecutive" do
       expect(@board.consecutive_checker_numbers(@cruiser, ["A1", "A2", "A4"])).to eq(false)
       expect(@board.consecutive_checker_numbers(@submarine, ["A1", "C1"])).to eq(true)
+      expect(@board.consecutive_checker_numbers(@cruiser, ["A1", "A2", "A4"])).to eq(false)
     end
   end
 
   describe "#consecutive_checker_letters" do
     it "can check if the array of letters are consecutive" do
-      # expect(@board.consecutive_checker_letters(@cruiser, ["A1", "A2", "A4"])).to eq(true)
+      expect(@board.consecutive_checker_letters(@cruiser, ["A1", "A2", "A4"])).to eq(true)
       expect(@board.consecutive_checker_letters(@submarine, ["A1", "C1"])).to eq(false)
+      expect(@board.consecutive_checker_letters(@cruiser, ["C2", "A2", "B1"])).to eq(false)
     end
   end
 
@@ -143,6 +146,16 @@ RSpec.describe Board do
       expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
 
       expect(@board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+    end
+  end
+
+  describe "#random_placer_helper" do
+    it "can verify if random coordinates are valid" do
+      @board.random_placer_helper(@cruiser)
+
+      expect(@board.valid_placement?(@cruiser, ["C2", "A2", "B1"])).to eq(false)
+      expect(@board.random_placer_helper(@cruiser).length).to eq(3)
+      expect(@board.random_placer_helper(@cruiser)).to be_a Array
     end
   end
 end
