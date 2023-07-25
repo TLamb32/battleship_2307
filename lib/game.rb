@@ -22,6 +22,7 @@ class Game
     @computer_submarine = Ship.new("Submarine", 2)
     @computer_board.random_placer_helper(@computer_cruiser)
     @computer_board.random_placer_helper(@computer_submarine)
+    # @computer_shot = @board.cells.keys.sample
   end
 
   # @computer_board.place_ship.sample
@@ -78,12 +79,45 @@ class Game
             puts "You missed"
             puts @computer_board.render(true)
           end
+          # puts @computer_board.render(true)
+          
+        else
+          puts "Please enter a valid coordinate:" 
           break
-        puts @computer_board.render(true)
-      else
-        puts "Please enter a valid coordinate:"
+        end
+      puts "I will now take my turn!"
+      @computer_shot_data = @board.cells.keys.sample
+      if @board.cells[@computer_shot_data].fired_upon? == true #loop until not fired upon
+        @computer_shot_data = @board.cells.keys.sample
+          if @board.cells[@computer_shot_data].fire_upon == true
+            @computer_shot_data = @board.cells.keys.sample
+          elsif @board.valid_coordinate(@computer_shot_data)
+            @computer_shot_data
+            puts @board.render(true)
+            computer_shot_data
+          end
+          break
+        #   @computer_shot_data = @board.cells.keys.sample
+        # if @board.valid_coordinate?(@computer_shot_data)
+        #   @computer_shot_data
+        
       end
+      
+      @computer_shot_data
+      
+      
+      if @board.cells[@computer_shot_data].render == "M"
+        puts "My shot on #{@computer_shot_data} was a miss"
+      elsif @board.cells[@computer_shot_data].render == "X"
+        puts "My shot on #{@computer_shot_data} sunk your ship!"
+      elsif @board.cells[@computer_shot_data].render == "H"
+        puts "My shot on #{@computer_shot_data} was a hit!"
+      end
+      
+      # loop do
+      # end
     end
+
 
 
   end
