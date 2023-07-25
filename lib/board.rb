@@ -110,7 +110,6 @@ class Board
     end
   end
 
-
   def random_placer_helper(ship)
     coordinates_needed = @cells.keys
     random_coordinates = coordinates_needed.sample(ship.length)
@@ -119,6 +118,7 @@ class Board
     end
     random_coordinates
     place(ship, random_coordinates)
-    # require 'pry'; binding.pry
   end
+
+
 end
