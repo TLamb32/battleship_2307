@@ -18,8 +18,8 @@ RSpec.describe Board do
     end
   
     it "has readable attributes" do
-      expect(@board.cells).to be_a Hash
-      expect(@board.cells.values.first).to be_a Cell
+      expect(@board.cells).to be_a(Hash)
+      expect(@board.cells.values.first).to be_a(Cell)
       expect(@board.cells.length).to eq(16)
     end
   end
@@ -55,6 +55,8 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["C1", "C2"])).to eq(true)
     end
   end
+
+  # Helper method tests
 
   describe "#consecutive_check" do
     it "can make sure the coordinates are consecutive" do
@@ -148,11 +150,11 @@ RSpec.describe Board do
 
   describe "#random_placer_helper" do
     it "can verify if random coordinates are valid" do
-      @board.random_placer_helper(@cruiser)
-
-      expect(@board.valid_placement?(@cruiser, ["C2", "A2", "B1"])).to eq(false)
       expect(@board.random_placer_helper(@cruiser).length).to eq(3)
-      expect(@board.random_placer_helper(@cruiser)).to be_a Array
+      expect(@board.random_placer_helper(@cruiser)).to be_a(Array)
+      
+      expect(@board.random_placer_helper(@submarine).length).to eq(2)
+      expect(@board.random_placer_helper(@submarine)).to be_a(Array)
     end
   end
 end
