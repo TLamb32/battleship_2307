@@ -48,38 +48,29 @@ class Game
 
     loop do
       puts "Now, place your submarine!"
-      # puts @board.render(true)
       user_input = gets.chomp
       formatted = user_input.upcase.delete(",").split
-        if @board.valid_placement?(@submarine, formatted) 
-          @board.place(@submarine, formatted)
-          puts "Great placement!"
-          # puts @board.render(true)
-          
-          break
-        else
-          puts "Invalid coordinates, please try again."
-        end
-          # puts @board.render(true)
+      if @board.valid_placement?(@submarine, formatted) 
+        @board.place(@submarine, formatted)
+        puts "Great placement!"
+        break
+      else
+        puts "Invalid coordinates, please try again."
+      end
     end
   end
 
 
 
   def game_turn_start
-      
     loop do
       puts "=============COMPUTER BOARD============="
       puts @computer_board.render(true)
       puts "==============PLAYER BOARD=============="
       puts @board.render(true)
-        
-      # if @board.win == true
-      #   puts
-      # else
       player_turn
       computer_turn
-      end
+    end
   end
   
 
@@ -88,8 +79,8 @@ class Game
       puts "Enter the coordinate for your shot:"
       user_input = gets.chomp
       formatted = user_input.upcase
-      if @computer_board.valid_coordinate?(formatted) && @computer_board.cells[formatted].fired_upon? == false ##this is changing fired_at to true #@computer_board.cells[formatted].fired_at == true 
-        # if @computer_board.cells[formatted].empty? == false
+      if @computer_board.valid_coordinate?(formatted)   ##this is changing fired_at to true #@computer_board.cells[formatted].fired_at == true 
+        if @computer_board.cells[formatted].fired_upon? == false
         @computer_board.cells[formatted].fire_upon
           if @computer_board.cells[formatted].render == "M"
             puts "Your shot on #{formatted} was a miss."
@@ -99,10 +90,12 @@ class Game
             puts "Your shot on #{formatted} was a hit!"
           end
           break
-        # end
+        else
+          puts "You hit that cell already, try again!"
+        end
       else
         puts "Please enter a valid coordinate:" 
-    end
+      end
     end
   end
 
