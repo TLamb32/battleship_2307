@@ -22,7 +22,7 @@ class Cell
   end
 
   def fire_upon
-    if empty? == false
+    if empty? == false 
       @ship.hit
       @fired_at = true
     else
@@ -43,5 +43,7 @@ class Cell
       "."
     end
   end
+
+
 
 end
