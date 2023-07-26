@@ -25,7 +25,8 @@ class Game
   end
 
   def game_begin
-    puts "I have laid out my ships on the grid.
+    puts 
+    "I have laid out my ships on the grid.
     You now need to lay out your two ships.
     The Cruiser is #{@cruiser.length} spaces long and the Submarine is #{@submarine.length} spaces long."
     puts @board.render(true)
@@ -86,45 +87,42 @@ class Game
     loop do
       puts "Enter the coordinate for your shot:"
       user_input = gets.chomp
-        formatted = user_input.upcase
-          if @computer_board.valid_coordinate?(formatted) && @computer_board.cells[formatted].fire_upon == true  #@computer_board.cells[formatted].fired_at == true 
-            if @computer_board.cells[formatted].empty? == false
-              if @computer_board.cells[formatted].render == "M"
-                puts "Your shot on #{formatted} was a miss."
-              elsif @computer_board.cells[formatted].render == "X"
-                puts "Your shot on #{formatted} sunk my ship!"
-              elsif @computer_board.cells[formatted].render == "H"
-                puts "Your shot on #{formatted} was a hit!"
-              end
-            end
-              
-              # puts @computer_board.render(true)
-            
-            break
-          else
-            puts "Please enter a valid coordinate:" 
+      formatted = user_input.upcase
+      if @computer_board.valid_coordinate?(formatted) && @computer_board.cells[formatted].fired_upon? == false ##this is changing fired_at to true #@computer_board.cells[formatted].fired_at == true 
+        # if @computer_board.cells[formatted].empty? == false
+        @computer_board.cells[formatted].fire_upon
+          if @computer_board.cells[formatted].render == "M"
+            puts "Your shot on #{formatted} was a miss."
+          elsif @computer_board.cells[formatted].render == "X"
+            puts "Your shot on #{formatted} sunk my ship!"
+          elsif @computer_board.cells[formatted].render == "H"
+            puts "Your shot on #{formatted} was a hit!"
           end
+          break
+        # end
+      else
+        puts "Please enter a valid coordinate:" 
+    end
     end
   end
 
   def computer_turn
     puts "I will now take my turn!"
+    loop do 
       @computer_shot_data = @board.cells.keys.sample
-      if @board.cells[@computer_shot_data].fire_upon == true #loop until not fired upon
-        if @board.cells[@computer_shot_data].render == "M"
-          puts "My shot on #{@computer_shot_data} was a miss"
-        elsif @board.cells[@computer_shot_data].render == "X"
-          puts "My shot on #{@computer_shot_data} sunk your ship!"
-        elsif @board.cells[@computer_shot_data].render == "H"
-          puts "My shot on #{@computer_shot_data} was a hit!"
-        end
-        @computer_shot_data = @board.cells.keys.sample
-      end
-      # @computer_shot_data
-      # require 'pry';binding.pry
+      break if @board.cells[@computer_shot_data].fired_upon? == false
+    end        
+    @board.cells[@computer_shot_data].fire_upon
+    if @board.cells[@computer_shot_data].render == "M"
+      puts "My shot on #{@computer_shot_data} was a miss"
+    elsif @board.cells[@computer_shot_data].render == "X"
+      puts "My shot on #{@computer_shot_data} sunk your ship!"
+    elsif @board.cells[@computer_shot_data].render == "H"
+      puts "My shot on #{@computer_shot_data} was a hit!"
     end
+  end
     
-    # @computer_shot_data
+  
       
 end
 
