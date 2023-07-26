@@ -68,8 +68,16 @@ class Game
       puts @computer_board.render(true)
       puts "==============PLAYER BOARD=============="
       puts @board.render(true)
-      player_turn
-      computer_turn
+      if @computer_cruiser.health == 0 && @computer_submarine.health == 0
+        puts "you win!"
+        break
+      elsif @cruiser == 0 && @submarine == 0
+        puts "I win, you lose!"
+        break
+      else
+        player_turn
+        computer_turn
+      end
     end
   end
   
