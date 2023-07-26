@@ -2,6 +2,7 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/game.rb'
+require 'colorize'
 
 @game = Game.new
 

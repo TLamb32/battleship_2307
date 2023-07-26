@@ -2,6 +2,7 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/game'
+require 'colorize'
 
 RSpec.describe Game do
   describe "game" do
