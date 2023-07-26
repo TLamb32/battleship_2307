@@ -33,17 +33,13 @@ RSpec.describe Ship do
       expect(@cruiser.health).to eq(0)
       expect(@cruiser.sunk?).to eq(true)
     end
-
-    describe "#hit" do
-      it "can decrease ship health by one" do
-        expect(@cruiser.health).to eq(3)
-        @cruiser.hit
-        expect(@cruiser.health).to eq(2)
-      end
-    end
-
   end
 
-
-
+  describe "#hit" do
+    it "can decrease ship health by one" do
+      expect(@cruiser.health).to eq(3)
+      @cruiser.hit
+      expect(@cruiser.health).to eq(2)
+    end
+  end
 end

@@ -1,15 +1,14 @@
 class Game
 
   def main_menu
-    puts "Welcome to BATTLESHIP"
+    puts "Welcome to BATTLESHIP!"
     puts "Enter p to play. Enter q to quit."
     user_input = gets.chomp
     if user_input == "p" || user_input == "P"
       setup
       game_begin
     else user_input == "q" || user_input == "Q"
-      puts "Quitter!"
-      main_menu
+      puts "Don't be a quitter, try again!"
     end
   end
 
@@ -22,23 +21,19 @@ class Game
     @computer_submarine = Ship.new("Submarine", 2)
     @computer_board.random_placer_helper(@computer_cruiser)
     @computer_board.random_placer_helper(@computer_submarine)
-    # @computer_shot = @board.cells.keys.sample
   end
 
-  # @computer_board.place_ship.sample
-  def game_begin 
-    puts "I have laid out my ships on the grid.
-    You now need to lay out your two ships.
-    The Cruiser is #{@cruiser.length} spaces long and the Submarine is #{@submarine.length} spaces long."
+  def game_begin
+    puts "I have laid out my ships on the grid. \nYou now need to lay out your two ships.\nThe Cruiser is #{@cruiser.length} spaces long and the Submarine is #{@submarine.length} spaces long."
     puts @board.render(true)
 
     loop do
-      puts "Enter the squares for the Cruiser (3 spaces):"
+      puts "Enter the coordinates for the Cruiser (e.g. A1 B1 C1):"
       user_input = gets.chomp
       formatted = user_input.upcase.delete(",").split
       if @board.valid_placement?(@cruiser, formatted) 
         @board.place(@cruiser, formatted)
-        puts "Great placement!"
+        puts "You're Cruiser has successfully been placed."
         puts @board.render(true)
         break
       else
@@ -48,77 +43,78 @@ class Game
     end
 
     loop do
-      puts "Now, place your submarine!"
-      # puts @board.render(true)
+      puts "Now, enter the coordinates for the Submarine (e.g. D1 D2):"
       user_input = gets.chomp
       formatted = user_input.upcase.delete(",").split
-        if @board.valid_placement?(@submarine, formatted) 
-          @board.place(@submarine, formatted)
-          puts "Great placement!"
-          puts @board.render(true)
-          break
-        else
-          puts "Invalid coordinates, please try again."
-          end
-          puts @board.render(true)
+      if @board.valid_placement?(@submarine, formatted) 
+        @board.place(@submarine, formatted)
+        puts "You're Submarine has successfully been placed."
+        break
+      else
+        puts "Invalid coordinates, please try again."
+      end
     end
+  end
 
+  def game_turn_start
     loop do
       puts "=============COMPUTER BOARD============="
-      puts @computer_board.render(true)
+      puts @computer_board.render
       puts "==============PLAYER BOARD=============="
       puts @board.render(true)
-      puts "Enter the coordinate for your shot:"
+      if @computer_cruiser.sunk? && @computer_submarine.sunk?
+        puts "Congratulations! You've sunk both of my ships. You win!"
+        break
+      elsif @cruiser.sunk? && @submarine.sunk?
+        puts "Well, well, well. How the turn tables, I managed to beat you this time!"
+        break
+      else
+        player_turn
+        computer_turn
+      end
+    end
+  end
+  
+
+  def player_turn
+    loop do
+      puts "Enter the coordinate for your shot (e.g. A1):"
       user_input = gets.chomp
       formatted = user_input.upcase
-        if @computer_board.valid_coordinate?(formatted) && @computer_board.cells[formatted].fire_upon == true
-          if @computer_board.cells[formatted].empty? == false
-            puts "You hit my ship!"
-            puts @computer_board.render(true)
-          else
-            puts "You missed"
-            puts @computer_board.render(true)
+      if @computer_board.valid_coordinate?(formatted) 
+        if @computer_board.cells[formatted].fired_upon? == false
+        @computer_board.cells[formatted].fire_upon
+          if @computer_board.cells[formatted].render == "M"
+            puts "Your shot on #{formatted} was a miss."
+          elsif @computer_board.cells[formatted].render == "X"
+            puts "Your shot on #{formatted} sunk my ship!"
+          elsif @computer_board.cells[formatted].render == "H"
+            puts "Your shot on #{formatted} was a hit!"
           end
-          # puts @computer_board.render(true)
-          
+          break
         else
-          puts "Please enter a valid coordinate:" 
-          break
+          puts "You already shot that coordinate, please select a different one:"
         end
-      puts "I will now take my turn!"
-      @computer_shot_data = @board.cells.keys.sample
-      if @board.cells[@computer_shot_data].fired_upon? == true #loop until not fired upon
-        @computer_shot_data = @board.cells.keys.sample
-          if @board.cells[@computer_shot_data].fire_upon == true
-            @computer_shot_data = @board.cells.keys.sample
-          elsif @board.valid_coordinate(@computer_shot_data)
-            @computer_shot_data
-            puts @board.render(true)
-            computer_shot_data
-          end
-          break
-        #   @computer_shot_data = @board.cells.keys.sample
-        # if @board.valid_coordinate?(@computer_shot_data)
-        #   @computer_shot_data
-        
+      else
+        puts "Please enter a valid coordinate:" 
       end
-      
-      @computer_shot_data
-      
-      
-      if @board.cells[@computer_shot_data].render == "M"
-        puts "My shot on #{@computer_shot_data} was a miss"
-      elsif @board.cells[@computer_shot_data].render == "X"
-        puts "My shot on #{@computer_shot_data} sunk your ship!"
-      elsif @board.cells[@computer_shot_data].render == "H"
-        puts "My shot on #{@computer_shot_data} was a hit!"
-      end
-      
-      # loop do
-      # end
     end
+  end
 
-
-
+  def computer_turn
+    puts "It's my turn, hold onto your butts!"
+    loop do 
+      @computer_shot_data = @board.cells.keys.sample
+      break if @board.cells[@computer_shot_data].fired_upon? == false
+    end        
+    @board.cells[@computer_shot_data].fire_upon
+    if @board.cells[@computer_shot_data].render == "M"
+      puts "My shot on #{@computer_shot_data} was a miss"
+    elsif @board.cells[@computer_shot_data].render == "X"
+      puts "My shot on #{@computer_shot_data} sunk your ship!"
+    elsif @board.cells[@computer_shot_data].render == "H"
+      puts "My shot on #{@computer_shot_data} was a hit!"
+    end
   end
 end
+
