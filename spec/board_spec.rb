@@ -142,9 +142,9 @@ RSpec.describe Board do
     it "can render the board into a formatter grid" do
       @board.place(@cruiser, ["A1", "A2", "A3"])  
 
-      expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+      expect(@board.render).to eq("\e[0;31;49m  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n\e[0m")
 
-      expect(@board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+      expect(@board.render(true)).to eq("\e[0;32;49m  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n\e[0m")
     end
   end
 
