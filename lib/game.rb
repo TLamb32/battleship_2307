@@ -122,8 +122,5 @@ class Game
       puts "My shot on #{@computer_shot_data} was a hit!"
     end
   end
-    
-  
-      
 end
 

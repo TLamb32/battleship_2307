@@ -7,10 +7,8 @@ RSpec.describe Board do
     @cell = Cell.new("B4")
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-
     @cell_1 = Cell.new("B4")
     @cell_2 = Cell.new("C3")
-
     @board = Board.new
   end
 
@@ -55,22 +53,21 @@ RSpec.describe Board do
       @board.place(@cruiser, ["B1", "B2", "B3"])
       expect(@board.valid_placement?(@submarine, ["B1", "B2"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["C1", "C2"])).to eq(true)
-
     end
   end
 
   describe "#consecutive_check" do
     it "can make sure the coordinates are consecutive" do
-    expect(@board.consecutive_check(@cruiser, ["A1", "A2", "A4"])).to eq(false)
-    expect(@board.consecutive_check(@submarine, ["A1", "C1"])).to eq(false)
-    expect(@board.consecutive_check(@cruiser, ["A1", "A2", "A3"])).to eq(true)
-    expect(@board.consecutive_check(@submarine, ["B1", "C1"])).to eq(true)
-    expect(@board.consecutive_check(@cruiser, ["C2", "A2", "B1"])).to eq(false)
+      expect(@board.consecutive_check(@cruiser, ["A1", "A2", "A4"])).to eq(false)
+      expect(@board.consecutive_check(@submarine, ["A1", "C1"])).to eq(false)
+      expect(@board.consecutive_check(@cruiser, ["A1", "A2", "A3"])).to eq(true)
+      expect(@board.consecutive_check(@submarine, ["B1", "C1"])).to eq(true)
+      expect(@board.consecutive_check(@cruiser, ["C2", "A2", "B1"])).to eq(false)
     end
   end
 
   describe "#diagonal_check" do
-    it "checks if cells ar placed diagonally" do
+    it "checks if cells are placed diagonally" do
       expect(@board.diagonal_check(@cruiser, ["A1", "B2", "C3"])).to eq(false)
       expect(@board.diagonal_check(@submarine, ["C2", "D3"])).to eq(false)
       expect(@board.diagonal_check(@cruiser, ["A1", "A2", "A3"])).to eq(true)
@@ -129,7 +126,7 @@ RSpec.describe Board do
   end
 
   describe "#overlapping_ships" do
-    it "checks for overlapping ships" do
+    it "can check for overlapping ships" do
       @board.place(@cruiser, ["A1", "A2", "A3"])
       expect(@board.overlapping_ships(@submarine, ["A1", "B1"])).to eq(false)
       expect(@board.overlapping_ships(@submarine, ["B1", "B2"])).to eq(true)
@@ -140,7 +137,7 @@ RSpec.describe Board do
   end
 
   describe "#render" do
-    it "can renderthe board into a formatter grid" do
+    it "can render the board into a formatter grid" do
       @board.place(@cruiser, ["A1", "A2", "A3"])  
 
       expect(@board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
