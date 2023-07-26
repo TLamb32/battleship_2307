@@ -9,7 +9,6 @@ class Game
       game_begin
     else user_input == "q" || user_input == "Q"
       puts "Don't be a quitter, try again!"
-      main_menu
     end
   end
 
@@ -60,7 +59,7 @@ class Game
   def game_turn_start
     loop do
       puts "=============COMPUTER BOARD============="
-      puts @computer_board.render(true)
+      puts @computer_board.render
       puts "==============PLAYER BOARD=============="
       puts @board.render(true)
       if @computer_cruiser.sunk? && @computer_submarine.sunk?
