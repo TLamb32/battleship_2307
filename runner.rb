@@ -5,4 +5,7 @@ require './lib/game.rb'
 
 @game = Game.new
 
-@game.main_menu
+loop do
+  @game.main_menu
+  @game.game_turn_start
+end
