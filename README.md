@@ -1,3 +1,6 @@
+Please install the gem "colorize" by typing "gem install colorize"
+
+
 1 .Iteration 3 did not provide an interaction pattern. How did you approach designing this iteration? If you did not get to Iteration 3, reflect on how you think you would’ve approached the design and problem solving process.
 
 While the iteration 3 interaction pattern isn't laid out like the previous two, it still reads like one. We referred to the headers of the various sections as if they were method names, determined the functionality of each one, and built from there. Worth noting, we built each method, checked its functionality, and then had to reorganize the actual method code blocks within the loops to attain the wanted effect of the full game.
